@@ -30,6 +30,6 @@ pre-deploy-job:
     script:
         #- apk update && apk add ansible sshpass
         - ansible --version
-        - ansible-playbook -i $hosts deploy.yaml
+        - ansible-playbook -i $hosts -m ping
 
 
