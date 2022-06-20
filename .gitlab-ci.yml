@@ -26,9 +26,9 @@ pre-deploy-job:
     image: alpine:latest
     stage: pre-deploy
     tags: 
-        - k8s
+        - gssc-k8s
     script:
-        - apk update && apk add ansible sshpass
+        #- apk update && apk add ansible sshpass
         - ansible --version
         - ansible-playbook -i hosts deploy.yaml
 
