@@ -27,5 +27,6 @@ pre-deploy-job:
         - k8s
     script:
         - apk update && apk add ansible
+        - ansible --version
 
 
