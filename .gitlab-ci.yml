@@ -27,7 +27,7 @@ pre-deploy-job:
     tags: 
         - k8s
     script:
-        - apk update && apk add ansible
+        - apk update && apk add ansible sshpass 
         - ansible --version
         - ansible-playbook -i hosts deploy.yaml
 
