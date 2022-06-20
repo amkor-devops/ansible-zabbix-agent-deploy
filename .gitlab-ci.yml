@@ -28,5 +28,6 @@ pre-deploy-job:
     script:
         - apk update && apk add ansible
         - ansible --version
+        - ansible -i hosts deploy.yaml
 
 
