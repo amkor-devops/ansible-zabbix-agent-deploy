@@ -19,14 +19,15 @@ stages:          # List of stages for jobs, and their order of execution
 
 pre-deploy-job:
     variables:
+        ANSIBLE_HOST_KEY_CHECKING: "False"
         DEV_HOST: "gssck8sud04.amkor.com"  
         DEV_USER: "root"
-    image: alpine:latest
+    image: ansible/ansible:ubuntu1604py3
     stage: pre-deploy
     tags: 
         - k8s
     script:
-        - apk update && apk add ansible
+        #- apk update && apk add ansible
         - ansible --version
         - ansible-playbook -i hosts deploy.yaml
 
