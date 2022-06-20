@@ -26,6 +26,6 @@ pre-deploy-job:
     tags: 
         - k8s
     script:
-        - apt update && apk add ansible
+        - apk update && apk add ansible
 
 
