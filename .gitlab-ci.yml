@@ -21,6 +21,7 @@ pre-deploy-job:
     variables:
         ANSIBLE_HOST_KEY_CHECKING: "False"
         ANSIBLE_CONFIG: ./ansible.cfg
+    environment: $target_env
     #image: alpine:latest
     stage: deploy
     tags: 
