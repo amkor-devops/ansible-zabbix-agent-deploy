@@ -64,17 +64,121 @@
       when: ansible_facts['os_family'] == "Debian" and ansible_facts['distribution_major_version'] == "9"
 
 
+
+    - name: pkg install pkgutil
+      #ansible.builtin.shell: pkgadd -d http://get.opencsw.org/now
+      svr4pkg:
+        name: CSWpkgutil
+        src: 'http://get.opencsw.org/now'
+        state: present
+        #category: true
+        zone: current
+      when: ansible_facts['os_family'] == "Solaris"
+
+    - name: pkg install libpcre-dev
+      become: true
+      pkgutil:
+        name: CSWlibpcre-dev
+        state: present
+      when: ansible_facts['os_family'] == "Solaris"
+
+    - name: group add zabbix
+      ansible.builtin.group:
+        name: zabbix
+        state: present
+      when: ansible_facts['os_family'] == "Solaris"
+
+    - name: useradd zabbix to zabbix group
+      ansible.builtin.user:
+        name: zabbix
+        group: zabbix
+      when: ansible_facts['os_family'] == "Solaris"
+
+    - name: Creates directory
+      file:
+        path: /usr/local
+        state: directory
+      when: ansible_facts['os_family'] == "Solaris"
+
+    - name: Copy file with owner and permissions
+      ansible.builtin.copy:
+        src: ./zabbix-agent/
+        dest: /usr/local
+        owner: zabbix
+        group: zabbix 
+        mode: '0644'
+      when: ansible_facts['os_family'] == "Solaris"
+
+    - name: Change file ownership, group and permissions
+      ansible.builtin.file:
+        path: /tmp/zabbix_agentd.log
+        owner: zabbix
+        group: zabbix
+        state: touch
+        mode: '0644'
+      when: ansible_facts['os_family'] == "Solaris"
+
+    - name: Changing permission
+      file: dest=/usr/local/sbin/zabbix_agentd mode=a+x
+      when: ansible_facts['os_family'] == "Solaris"
+
+
+    - name: install service
+      ansible.builtin.shell: svcbundle -o zabbix-agentd.xml -s service-name=application/zabbix-agentd -s model=daemon -s start-method="/usr/local/sbin/zabbix_agentd -c /usr/local/etc/zabbix_agentd.conf"
+      when: ansible_facts['os_family'] == "Solaris"
+
+    - name: install svc
+      ansible.builtin.shell: svccfg import /usr/local/share/zabbix-agentd.xml
+      when: ansible_facts['os_family'] == "Solaris"
+    
+    - name: replace line server
+      lineinfile:
+        path: /usr/local/etc/zabbix_agentd.conf
+        #regexp: '^127\.0\.0\.1'
+        search_string: 'Server=127.0.0.1'
+        line: Server=muzabapd01.my.ds.amkor.com
+        #backrefs: yes
+      when: ansible_facts['os_family'] == "Solaris"
+
+    - name: replace line server-active
+      lineinfile:
+        path: /usr/local/etc/zabbix_agentd.conf
+        search_string: 'ServerActive=127.0.0.1'
+        #regexp: '^127\.0\.0\.1'
+        line: ServerActive=muzabapd01.my.ds.amkor.com
+        #backrefs: yes
+      when: ansible_facts['os_family'] == "Solaris"
+
+    - name: replace line hostname
+      lineinfile:
+        path: /usr/local/etc/zabbix_agentd.conf
+        search_string: 'Hostname=Zabbix server'
+        #regexp: 'Zabbix server'
+        line: Hostname={{ansible_fqdn}}
+        #backrefs: yes
+      when: ansible_facts['os_family'] == "Solaris"
+
+    - name: Enable service zabbix-agentd
+      ansible.builtin.service:
+        name: zabbix-agentd
+        enabled: yes
+      when: ansible_facts['os_family'] == "Solaris"
+      
+
     - name: copy zabbix_agent2.conf
       copy:
         src: zabbix_agent2.conf
         dest: /etc/zabbix/
         force: yes
+      when: ansible_facts['system'] == "Linux"
+
 
     - name: replace line server
       lineinfile:
         path: /etc/zabbix/zabbix_agent2.conf 
         search_string: 'Server=127.0.0.1'
         line: Server=muzabapd01.my.ds.amkor.com
+      when: ansible_facts['system'] == "Linux"
         #backrefs: yes
     
     - name: replace line server-active
@@ -83,6 +187,7 @@
         search_string: 'ServerActive=127.0.0.1'
         line: ServerActive=muzabapd01.my.ds.amkor.com
         #backrefs: yes
+      when: ansible_facts['system'] == "Linux"
 
     - name: replace line hostname
       lineinfile:
@@ -90,13 +195,16 @@
         search_string: 'Hostname=Zabbix server'
         line: Hostname={{ansible_fqdn}}
         #backrefs: yes
+      when: ansible_facts['system'] == "Linux"
         
     - name: enable service zabbix-agent2
       ansible.builtin.service:
         name: zabbix-agent2
         enabled: yes
+      when: ansible_facts['system'] == "Linux"
 
     - name: start service zabbix-agent2
       ansible.builtin.service:
         name: zabbix-agent2
         state: restarted
+      when: ansible_facts['system'] == "Linux"
