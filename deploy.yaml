@@ -102,7 +102,7 @@
 
     - name: Copy file with owner and permissions
       ansible.builtin.copy:
-        src: ./zabbix-agent/
+        src: ./zabbix-agent-solaris/
         dest: /usr/local
         owner: zabbix
         group: zabbix 
