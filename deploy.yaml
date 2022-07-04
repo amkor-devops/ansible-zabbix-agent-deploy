@@ -136,7 +136,7 @@
         path: /usr/local/etc/zabbix_agentd.conf
         #regexp: '^127\.0\.0\.1'
         search_string: 'Server=127.0.0.1'
-        line: Server=muzabapd01.my.ds.amkor.com
+        line: Server=auatiapd01.amkor.com
         #backrefs: yes
       when: ansible_facts['os_family'] == "Solaris"
 
@@ -145,7 +145,7 @@
         path: /usr/local/etc/zabbix_agentd.conf
         search_string: 'ServerActive=127.0.0.1'
         #regexp: '^127\.0\.0\.1'
-        line: ServerActive=muzabapd01.my.ds.amkor.com
+        line: ServerActive=auatiapd01.amkor.com
         #backrefs: yes
       when: ansible_facts['os_family'] == "Solaris"
 
@@ -177,7 +177,7 @@
       lineinfile:
         path: /etc/zabbix/zabbix_agent2.conf 
         search_string: 'Server=127.0.0.1'
-        line: Server=muzabapd01.my.ds.amkor.com
+        line: Server=auatiapd01.amkor.com
       when: ansible_facts['system'] == "Linux"
         #backrefs: yes
     
@@ -185,7 +185,7 @@
       lineinfile:
         path: /etc/zabbix/zabbix_agent2.conf 
         search_string: 'ServerActive=127.0.0.1'
-        line: ServerActive=muzabapd01.my.ds.amkor.com
+        line: ServerActive=auatiapd01.amkor.com
         #backrefs: yes
       when: ansible_facts['system'] == "Linux"
 
