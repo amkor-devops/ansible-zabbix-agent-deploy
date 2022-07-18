@@ -2,4 +2,8 @@
   become: yes  
 
   tasks:
-   - ping
+    - name: ping
+      become: true
+      ansible.builtin.ping:
+
+
