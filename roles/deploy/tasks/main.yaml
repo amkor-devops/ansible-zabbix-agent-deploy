@@ -193,7 +193,7 @@
     - name: replace line server
       lineinfile:
         path: /etc/zabbix/zabbix_agent2.conf 
-        search_string: 'Server=127.0.0.1'
+        search_string: 'Server='
         line: Server={{zabbix_server}}
       when: ansible_facts['system'] == "Linux"
         #backrefs: yes
@@ -201,7 +201,7 @@
     - name: replace line server-active
       lineinfile:
         path: /etc/zabbix/zabbix_agent2.conf 
-        search_string: 'ServerActive=127.0.0.1'
+        search_string: 'ServerActive='
         line: ServerActive={{zabbix_server}}
         #backrefs: yes
       when: ansible_facts['system'] == "Linux"
@@ -209,7 +209,7 @@
     - name: replace line hostname
       lineinfile:
         path: /etc/zabbix/zabbix_agent2.conf 
-        search_string: 'Hostname=Zabbix server'
+        search_string: 'Hostname='
         line: Hostname={{ansible_fqdn}}
         #backrefs: yes
       when: ansible_facts['system'] == "Linux"

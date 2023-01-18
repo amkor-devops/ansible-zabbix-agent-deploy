@@ -13,4 +13,6 @@ example.server.com
 #ansible_ssh_pass=strongpassword
 #ansible_sudo_pass=strongpassword
 
+[gssc]
+10.157.112.20
 
