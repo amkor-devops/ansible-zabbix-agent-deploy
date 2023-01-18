@@ -1,0 +1,17 @@
+[all:vars]
+ansible_connection=ssh
+ansible_user=root
+ansible_ssh_private_key_file=~/.ssh/id_rsa
+
+[gssc-server]
+10.157.112.20
+
+
+
+#[gssc-server:vars
+#ansible_user=root
+#ansible_ssh_pass=gEd$s7SWL#8idG
+#ansible_sudo_pass=gEd$s7SWL#8idG
+
+
+
