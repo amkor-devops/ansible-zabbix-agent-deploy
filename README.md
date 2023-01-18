@@ -52,7 +52,11 @@ ansible_sudo_pass=gEd$s7SWL#8idG
 
 ```
 ansible-playbook deploy.yaml -i "inventory"
-
 #ansible-playbook deploy.yaml -i invs/prod/hosts
+
+#to limit host or group
+
+ansible-playbook deploy.yaml -l "group" -i "inventory"
+#ansible-playbook deploy.yaml -l webserver -i invs/prod/hosts
 
 ```
