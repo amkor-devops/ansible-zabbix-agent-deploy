@@ -48,3 +48,11 @@ ansible_sudo_pass=gEd$s7SWL#8idG
 
 ```
 
+## Run Ansible Playbook
+
+```
+ansible-playbook deploy.yaml -i "inventory"
+
+#ansible-playbook deploy.yaml -i invs/prod/hosts
+
+```
