@@ -180,19 +180,21 @@
       when: ansible_facts['os_family'] == "Solaris"
       
 
-    - name: copy zabbix_agent2.conf
-      copy:
-        src: zabbix_agent2.conf
-        dest: /etc/zabbix/
-        force: yes
-      when: ansible_facts['system'] == "Linux"
+
+
+    #- name: copy zabbix_agent2.conf
+    #  copy:
+    #    src: zabbix_agent2.conf
+    #    dest: /etc/zabbix/
+    #    force: yes
+    #  when: ansible_facts['system'] == "Linux"
 
 
     - name: replace line server
       lineinfile:
         path: /etc/zabbix/zabbix_agent2.conf 
         search_string: 'Server=127.0.0.1'
-        line: Server=auatiapp01.amkor.com
+        line: Server={{zabbix_server}}
       when: ansible_facts['system'] == "Linux"
         #backrefs: yes
     
@@ -200,7 +202,7 @@
       lineinfile:
         path: /etc/zabbix/zabbix_agent2.conf 
         search_string: 'ServerActive=127.0.0.1'
-        line: ServerActive=auatiapp01.amkor.com
+        line: ServerActive={{zabbix_server}}
         #backrefs: yes
       when: ansible_facts['system'] == "Linux"
 

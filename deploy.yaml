@@ -1,3 +1,7 @@
 - hosts: all
+  vars_prompt:
+    - name: zabbix_server
+      prompt: Zabbix Server Hostname or IP?
+      private: false
   roles:
     - deploy
