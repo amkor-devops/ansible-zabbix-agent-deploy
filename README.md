@@ -42,7 +42,7 @@ ansible_connection=ssh
 [webserver]
 example.com
 
-[webserver:vars
+[webserver:vars]
 ansible_user=root
 ansible_ssh_pass=gEd$s7SWL#8idG
 ansible_sudo_pass=gEd$s7SWL#8idG
