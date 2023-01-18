@@ -7,6 +7,7 @@
 ```
 # RHEL/Oracle
 yum install ansible
+
 # Debian/Ubuntu
 apt install ansible
 ```
